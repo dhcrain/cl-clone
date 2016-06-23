@@ -1,0 +1,45 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>{% block title %}Buy my Old Junk{% endblock %}</title>
+        <link rel="stylesheet" href="{% static 'cl_app/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'cl_app/css/main.css' %}">
+    </head>
+    <body>
+        {# menu bar #}
+        <ul class="nav nav-tabs navbar-fixed-top">
+            <li role="presentation"><a href="{% url 'index_view' %}">Home</a></li>
+            {% if request.user.is_authenticated %}
+                {# <li role="presentation" class="pull-right"><a href="{% url 'logout' %}?next={% url 'index_view' %}">Log Out</a></li>#}
+                <li role="presentation" class="disabled pull-right"><a href="#">Welcome {{ request.user }}</a></li>
+            {% else %}
+                {# <li role="presentation"><a href="{% url 'register_view' %}">Get an account</a></li>#}
+                {# <li role="presentation"><a href="{% url 'login' %}">Log In</a></li>#}
+            {% endif %}
+        </ul>
+        {% block hero %}
+        <div class="hero-block row">
+                <div class="col-md-6 hero-text">
+                    <h2></h2>
+                </div>
+                <div class="col-md-6"></div>
+            <br>
+        </div>
+        {% endblock %}
+        <div class="container">
+            {% block body %}
+                body content
+            {% endblock %}
+        </div>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        {# <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>#}
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        {# <script src="{% static 'bank_app/js/bootstrap.js' %}"></script>#}
+    </body>
+    <footer>
+        <hr>
+        <p class="text-center">Made by Davis</p>
+    </footer>
+</html>

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <h1>this is...</h1>
+
+    {% for list in object_list %}
+        <p>{{ list.city }}</p>
+    {% endfor %}
+{% endblock %}
