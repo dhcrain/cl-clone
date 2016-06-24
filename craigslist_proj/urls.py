@@ -15,10 +15,14 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from cl_app.views import IndexView
+from cl_app.views import IndexView, RegisterView
+# from django.contrib.auth.forms import UserCreationForm
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('django.contrib.auth.urls')),
     url(r'^$', IndexView.as_view(), name='index_view'),
+    url('^register/', RegisterView.as_view(), name='register_view'),
+
 ]

@@ -3,34 +3,33 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 # Create your models here.
+class Profile(models.Model):
+    user = models.OneToOneField('auth.User')
+    city = models.CharField(max_length=15)
+    contact = models.CharField(max_length=30)
 
-CITY_CHOICE = (('gvl', 'Greenville'), ('avl', 'Asheville'), ('clt', 'Charlotte'), ('hou', 'Houston'))
 
 class City(models.Model):
     city = models.CharField(max_length=20)
 
-class Type(models.Model):
-    city = models.ForeignKey(City)
-    type = models.CharField(max_length=20)
+
+class ListingType(models.Model):
+    listing_type = models.CharField(max_length=20)
+    category = models.ForeignKey(self, related_name=None, related_query_name=None, limit_choices_to=None, parent_link=False, to_field=None, db_constraint=True)
+
+    def __str__(self):
+        return self.listing_type
 
 class Category(models.Model):
-    city = models.ForeignKey(City)
-    type = models.ForeignKey(Type)
+    listing_type = models.ForeignKey(ListingType)
     category = models.CharField(max_length=20)
 
-class Profile(models.Model):
-    user = models.ForeignKey('auth.User')
-    city = models.CharField(max_length=15, choices=CITY_CHOICE)
-    contact = models.CharField(max_length=30)
 
 
 class Listing(models.Model):
-    LISTING_CHOICE = (('fs', 'For Sale'), ('re', 'Real Estate'), ('btr', 'Barter'), ('srv', 'Service'))
-    CATEGORY_CHOICE = (('owner', 'By-Owner'), ('dealer', 'By-Dealer'))
     user = models.ForeignKey('auth.User')
     city = models.ForeignKey(City)
-    listing_type = models.ForeignKey(Type)
-    category = models.ForeignKey(Category)
+    category = models.ForeignKey(Category, limit_choices_to={'listing_type': 1})
     title = models.CharField(max_length=40)
     price = models.IntegerField()
     description = models.TextField()

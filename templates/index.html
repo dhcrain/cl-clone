@@ -2,6 +2,23 @@
 
 {% block body %}
     <h1>this is...</h1>
+    {% if request.user.is_authenticated %}
+    <h2>logged in!</h2>
+    {% else %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Login to cl</h3>
+        </div>
+        <div class="panel-body">
+            <form class="" action="{% url 'login' %}" method="post">
+                {% csrf_token %}
+                {{ login_form.as_p }}
+                <input class="btn btn-default" type="submit" name="login" value="Login">
+            </form>
+        </div>
+    </div>
+    {% endif %}
+
 
     {% for list in object_list %}
         <p>{{ list.city }}</p>

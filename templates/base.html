@@ -12,11 +12,10 @@
         <ul class="nav nav-tabs navbar-fixed-top">
             <li role="presentation"><a href="{% url 'index_view' %}">Home</a></li>
             {% if request.user.is_authenticated %}
-                {# <li role="presentation" class="pull-right"><a href="{% url 'logout' %}?next={% url 'index_view' %}">Log Out</a></li>#}
+                <li role="presentation" class="pull-right"><a href="{% url 'logout' %}?next={% url 'index_view' %}">Log Out</a></li>
                 <li role="presentation" class="disabled pull-right"><a href="#">Welcome {{ request.user }}</a></li>
             {% else %}
-                {# <li role="presentation"><a href="{% url 'register_view' %}">Get an account</a></li>#}
-                {# <li role="presentation"><a href="{% url 'login' %}">Log In</a></li>#}
+                <li role="presentation"><a href="{% url 'register_view' %}">Get an account</a></li>
             {% endif %}
         </ul>
         {% block hero %}
