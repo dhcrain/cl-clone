@@ -2,13 +2,17 @@
 
 {% block body %}
     <h1 class="text-center">this is... not Craigslist</h1>
-    <h1>city id: {{ city_id }}</h1>
+    <h2>{{ city.city }}</h2>
 
     <hr>
     <div class="row">
         <div class="col-md-3">
             {% if request.user.is_authenticated %}
-            <h2>Hello</h2>
+            <h2>Hello {{ request.user }}, <br>
+                <small>Would you like to go to your perfered city page,
+                <a href="{% url 'city_list_view' profile.profile_city.pk %}">{{ profile.profile_city }}</a>?</small>
+            </h2>
+            <br>
             {% else %}
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -33,12 +37,12 @@
             {% for list in object_list %}
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><a href="{% url 'city_category_list_view' city_id list.pk %}">{{ list }}</a></h3>
+                    <h3 class="panel-title"><a href="{% url 'city_category_list_view' city.pk list.pk %}">{{ list }}</a></h3>
                 </div>
                 <div class="panel-body">
                     <ul class="list-unstyled">
                         {% for sub in list.subcat.all %}
-                        <li><a href="{% url 'city_category_list_view' city_id sub.pk %}">{{ sub }}</a></li>
+                        <li><a href="{% url 'city_category_list_view' city.pk sub.pk %}">{{ sub }}</a></li>
                         {% endfor %}
                     </ul>
                 </div>

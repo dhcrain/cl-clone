@@ -33,13 +33,16 @@ class RegisterView(CreateView):
 
 class ListingCreateView(CreateView):
     model = Listing
-    fields = ['listing_city', 'category', 'title', 'price', 'description', 'photo']
+    fields = ['listing_city', 'title', 'price', 'description', 'photo']
     success_url = reverse_lazy("index_view")
 
     def form_valid(self, form):
         listing = form.save(commit=False)
         listing.user = self.request.user
+        category_id = self.kwargs.get('categorypk')
+        listing.category = ListingType.objects.get(id=category_id)
         return super().form_valid(form)
+
 
 class ListingTypeCreateView(CreateView):
     # model = ListingType
@@ -52,17 +55,26 @@ class ListingTypeCreateView(CreateView):
 
 class CityListView(ListView):
     template_name = 'cl_app/city_listing_list.html'
-    # template_name = "index.html"
     model = ListingType
 
     def get_queryset(self):
         return ListingType.objects.filter(parent=None)
 
     def get_context_data(self, **kwargs):
-        # city_id = self.kwargs.get('city')
         context = super().get_context_data(**kwargs)
-        context['city_id'] = self.kwargs.get('city')
+        city_id = self.kwargs.get('city')
+        context['city'] = City.objects.get(id=city_id)
+        context['cities'] = City.objects.all()
+
+        if self.request.user.is_authenticated():
+            context["profile"] = Profile.objects.get(user=self.request.user)
+        else:
+            context["login_form"] = AuthenticationForm()
         return context
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+
 
 
 class CityCategoryListView(ListView):
@@ -95,13 +107,20 @@ class CategoryListView(ListView):
     model = Listing
 
     def get_queryset(self, **kwargs):
-        category_id = self.kwargs.get('pk', None)
+        category_id = self.kwargs.get('categorypk', None)
         return Listing.objects.filter(category=category_id)
 
+    # def get_queryset(self, **kwargs):
+    #     # category_id = self.kwargs.get('categorypk', None)
+    #     category_id = self.kwargs.get('categorypk')
+    #     context = super().get_context_data(**kwargs)
+    #     context['object_list'] = Listing.objects.filter(category=category_id)
+    #     context['category'] = ListingType.objects.get(id=category_id)
+    #     return context
 
 class ProfileView(UpdateView):
     fields = ['city', 'preferred_contact']
     success_url = reverse_lazy("index_view")
-
+    # Why dont I have to declare a model here??
     def get_object(self, queryset=None):
         return self.request.user.profile

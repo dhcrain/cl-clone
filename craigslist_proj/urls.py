@@ -26,10 +26,10 @@ urlpatterns = [
     url(r'^$', IndexView.as_view(), name='index_view'),
     url('^register/$', RegisterView.as_view(), name='register_view'),
     url('^register/profile/$', ProfileView.as_view(), name='profile_view'),
-    url('^listingtype/$', ListingTypeCreateView.as_view(), name='listing_type_create_view'),
-    url('^listingcreate/$', ListingCreateView.as_view(), name='listing_create_view'),
+    # url('^listingtype/$', ListingTypeCreateView.as_view(), name='listing_type_create_view'),
+    url('^listingcreate/(?P<categorypk>\d+)$', ListingCreateView.as_view(), name='listing_create_view'),
     url('^listing/(?P<pk>\d+)/$', ListingDetailView.as_view(), name='listing_detail_view'),
-    url('^catergory/(?P<pk>\d+)/$', CategoryListView.as_view(), name='category_list_view'),
+    url('^catergory/(?P<categorypk>\d+)/$', CategoryListView.as_view(), name='category_list_view'),
     url('^city/(?P<city>\d+)/$', CityListView.as_view(), name='city_list_view'),
     url('^city/(?P<citypk>\d+)/(?P<categorypk>\d+)/$', CityCategoryListView.as_view(), name='city_category_list_view'),
 

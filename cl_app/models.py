@@ -12,7 +12,7 @@ class City(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField('auth.User')
-    city = models.ForeignKey(City)
+    profile_city = models.ForeignKey(City)
     preferred_contact = models.CharField(max_length=30)
 
     def __str__(self):
