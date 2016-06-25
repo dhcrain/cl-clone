@@ -18,7 +18,7 @@ admin.site.register(City)
 
 
 class ListingTypeAdmin(admin.ModelAdmin):
-    list_display = ['parent', 'name']
+    list_display = ['pk', 'parent', 'name']
 
 admin.site.register(ListingType, ListingTypeAdmin)
 

@@ -15,6 +15,9 @@ class Profile(models.Model):
     city = models.ForeignKey(City)
     preferred_contact = models.CharField(max_length=30)
 
+    def __str__(self):
+        return self.user
+
 
 class ListingType(models.Model):
     name = models.CharField(max_length=20)

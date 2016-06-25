@@ -21,7 +21,7 @@ class IndexView(ListView):
         context['cities'] = City.objects.all()
 
         if self.request.user.is_authenticated():
-            pass
+            context["profile"] = Profile.objects.get(user=self.request.user)
         else:
             context["login_form"] = AuthenticationForm()
         return context
@@ -41,6 +41,15 @@ class ListingCreateView(CreateView):
         listing.user = self.request.user
         return super().form_valid(form)
 
+class ListingTypeCreateView(CreateView):
+    # model = ListingType
+    fields = ['parent']
+    template_name = 'cl_app/listingtype_form.html'
+
+    def get_queryset(self):
+        return ListingType.subcat.filter(parent=None)
+
+
 class CityListView(ListView):
     template_name = 'cl_app/city_listing_list.html'
     # template_name = "index.html"
@@ -50,10 +59,28 @@ class CityListView(ListView):
         return ListingType.objects.filter(parent=None)
 
     def get_context_data(self, **kwargs):
-        city_id = self.kwargs.get('city')
+        # city_id = self.kwargs.get('city')
         context = super().get_context_data(**kwargs)
-        context['city_listings'] = Listing.objects.filter(listing_city=city_id)
+        context['city_id'] = self.kwargs.get('city')
         return context
+
+
+class CityCategoryListView(ListView):
+    model = Listing
+
+    def get_queryset(self, **kwargs):
+        city_id = self.kwargs.get('citypk')
+        category_id = self.kwargs.get('categorypk')
+        return Listing.objects.filter(listing_city=city_id).filter(category=category_id)
+
+    def get_context_data(self, **kwargs):
+        city_id = self.kwargs.get('citypk')
+        category_id = self.kwargs.get('categorypk')
+        context = super().get_context_data(**kwargs)
+        context['city'] = City.objects.get(id=city_id)
+        context['category'] = ListingType.objects.get(id=category_id)
+        return context
+
 
 class ListingDetailView(DetailView):
     model = Listing
@@ -70,17 +97,6 @@ class CategoryListView(ListView):
     def get_queryset(self, **kwargs):
         category_id = self.kwargs.get('pk', None)
         return Listing.objects.filter(category=category_id)
-
-
-class TypeListView(ListView):  # needs work
-    model = Listing
-
-    # def get_queryset(self, **kwargs):
-    #     category_id = self.kwargs.get('pk', None)
-    #     # if Listing.category_id  parent:
-    #     # ListingType.objects.filter(parent=None)
-    #     cat =
-    #     return Listing.objects.filter(category=(category_id__parent=None))
 
 
 class ProfileView(UpdateView):

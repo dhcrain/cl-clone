@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-md-3">
             {% if request.user.is_authenticated %}
-            <h2>Hello {{ request.user }}</h2>
+            <h2>Hello {{ request.user }}, <br><small>Would you like to go to your perfered city page, <a href="{% url 'city_list_view' profile.city.pk %}">{{ profile.city }}</a>?</small></h2>
             {% else %}
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -24,7 +24,7 @@
             {% endif %}
             <div class="list-group">
                 {% for city in cities %}
-                <a href="{% url 'city_list_view' city.city %}" class="list-group-item">{{ city }}</a>
+                <a href="{% url 'city_list_view' city.pk %}" class="list-group-item">{{ city }}</a>
                 {% endfor %}
             </div>
         </div>
