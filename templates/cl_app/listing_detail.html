@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <h1>Your listing</h1>
+    <h2 class="postingtitle"><small>&#9734;</small> {{ object.title }} <span> -  ${{ object.price }}</span><small> ({{ object.listing_city }})</small></h2>
+    <img src="{{ object.photo_url }}" alt="" />
+    <br>
+    <br>
+    <p>{{ object.description }}</p>
+    <br>
+    <p> contact: {{ profile.preferred_contact }}</p>
+    <br>
+    <div>
+        <p class="postinfo">post id: {{ object.id }}</p> <p class="postinfo">posted: <span class="timel">{{ object.created }}</span></p>
+    </div>
+{% endblock %}

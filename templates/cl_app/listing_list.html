@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <h1>Look at ...</h1>
+        {% for item in object_list %}
+        <div class="row listing-list">
+            <p><small>&#9734;</small><span class="time">{{ item.created|date:"N d" }} </span><a href="{% url 'listing_detail_view' item.pk %}">{{ item.title }} </a><span class="price">${{ item.price }}</span> <small>({{ item.listing_city }}) </small>{% if item.photo %}<span class="pic">pic</span>{% endif %}</p>
+        </div>
+        {% empty %}
+            <h4>Sorry, no items in this list.</h4>
+        {% endfor %}
+
+{% endblock %}

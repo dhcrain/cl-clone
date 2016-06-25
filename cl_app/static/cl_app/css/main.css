@@ -1,3 +1,50 @@
 body {
     margin-top: 60px;
 }
+.nav {
+    /*background-color: rgba(255, 255, 255, 0.9);*/
+    background-color: #EEEEEE;
+}
+.price {
+    font-size: .7em;
+    border: 1px solid #ccc;
+    -webkit-border-radius: .25em;
+    -moz-border-radius: .25em;
+    border-radius: .25em;
+    padding: 1px 3px;
+}
+span.pic {
+    color: orange;
+    font-size: smaller;
+}
+.time {
+    font-size: 0.7em;
+    line-height: 1em;
+    padding: 1px;
+    color: gray;
+    vertical-align: middle;
+}
+.listing-list {
+    margin-left: 50px;
+    margin-top: 10px;
+    font-size: 1.5em;
+
+}
+.posting .postingtitle {
+    font-family: "Bitstream Vera Serif","Times New Roman",serif;
+    font-size: 1.4em;
+    font-weight: bold;
+    line-height: 1.4em;
+    margin: 10px 0;
+    clear: left;
+}
+.postinfo {
+    display: inline-block;
+    font-size: .75em;
+    margin-right: 30px;
+}
+.timel {
+    cursor: pointer;
+    border-bottom: 1px dotted #999;
+    zoom: 1;
+}
