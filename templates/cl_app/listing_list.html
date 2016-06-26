@@ -11,21 +11,21 @@
         {% if category %}
             {{ category }}
         {% else %}
-            items
+            item's
         {% endif %}
     </h1>
     {% if category %}
     <a class="btn btn-success"href="{% url 'listing_create_view' category.pk %}">Add New Listing</a></li>
     {% endif %}
-
+{# Yeah, I think isn'y quite the ideal way to impliment this, lots of repetition #}
     <div class="btn-group pull-right" role="group">
-        <a href="#" id="list" class="btn btn-default">List</a>
-        <a href="#" id="grid" class="btn btn-default">Grid</a>
-        <a href="#" id="thumb" class="btn btn-default">Thumbnails</a>
+        <a href="#" id="listb" class="btn btn-default">List</a>
+        <a href="#" id="gridb" class="btn btn-default">Grid</a>
+        <a href="#" id="thumbb" class="btn btn-default">Thumbnails</a>
     </div>
 {# start content #}
     <br>
-    <div class="row" id="listings">
+    <div class="row" id="list">
         {% for item in object_list %}
         <div class="item listing-list">
             <p><small>&#9734;</small>
@@ -45,7 +45,7 @@
     <br>
 
     {# grid test #}
-    <div class="row">
+    <div class="row" id="grid">
     {% for item in object_list %}
         <div class="item col-md-4">
             <div class="thumbnail">
@@ -62,6 +62,7 @@
     {% endfor %}
     </div>
     {# thumbnail test #}
+    <div id="thumb">
     {% for item in object_list %}
     <div class="panel panel-default">
         <div class="row">
@@ -81,29 +82,12 @@
         </div>
     </div>
     {% endfor %}
+    </div>
 
+</div>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="{% static 'cl_app/js/bootstrap.min.js' %}"></script>
 <script src="{% static 'cl_app/js/main.js' %}"></script>
-
-{# backup of orginal #}
-<div class="row" id="listings">
-    {% for item in object_list %}
-    <div class="item listing-list">
-        <p><small>&#9734;</small>
-            <span class="time">{{ item.created|date:"N d" }} </span>
-            <a href="{% url 'listing_detail_view' item.pk %}">{{ item.title }} </a>
-            <span class="price">${{ item.price }}</span>
-            <small>({{ item.listing_city }}) </small>
-            {% if item.photo %}
-            <span class="pic">pic</span>
-            {% endif %}
-        </p>
-    </div>
-    {% empty %}
-        <h4>Sorry, no items in this list.</h4>
-    {% endfor %}
-</div>
 {% endblock %}

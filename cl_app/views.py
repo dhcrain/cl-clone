@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from cl_app.models import Listing, Profile, ListingType, City
 from django.views.generic.base import TemplateView
-from django.views.generic import ListView, CreateView, DetailView
+from django.views.generic import ListView, CreateView, DetailView, FormView
 from django.views.generic.edit import UpdateView, DeleteView
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
@@ -139,3 +139,27 @@ class ProfileView(UpdateView):
         context = super().get_context_data(**kwargs)
         context['user_listings'] = Listing.objects.filter(user=self.request.user)
         return context
+
+
+import operator
+from functools import reduce
+from django.db.models import Q
+class SearchListView(ListView):
+    # paginate_by = 10
+    model = Listing
+    def get_queryset(self):
+        result = super().get_queryset()
+        query = self.request.GET.get('q')
+        if query:
+            query_list = query.split()
+            result = result.filter(
+                reduce(operator.and_,
+                       (Q(title__icontains=q) for q in query_list)) |
+                reduce(operator.and_,
+                       (Q(description__icontains=q) for q in query_list))
+            )
+
+        return result
+    # pass
+# from django.db.models import Q
+# results = BlogPost.objects.filter(Q(title__icontains=your_search_query) | Q(intro__icontains=your_search_query) | Q(content__icontains=your_search_query)).order_by('pub_date')
