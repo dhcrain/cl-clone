@@ -1,3 +1,6 @@
+import operator
+from functools import reduce
+from django.db.models import Q
 from django.shortcuts import render
 from cl_app.models import Listing, Profile, ListingType, City
 from django.views.generic.base import TemplateView
@@ -140,13 +143,10 @@ class ProfileView(UpdateView):
         context['user_listings'] = Listing.objects.filter(user=self.request.user)
         return context
 
-
-import operator
-from functools import reduce
-from django.db.models import Q
+# modified from https://www.calazan.com/adding-basic-search-to-your-django-site/
 class SearchListView(ListView):
-    # paginate_by = 10
     model = Listing
+    
     def get_queryset(self):
         result = super().get_queryset()
         query = self.request.GET.get('q')
@@ -158,8 +158,4 @@ class SearchListView(ListView):
                 reduce(operator.and_,
                        (Q(description__icontains=q) for q in query_list))
             )
-
         return result
-    # pass
-# from django.db.models import Q
-# results = BlogPost.objects.filter(Q(title__icontains=your_search_query) | Q(intro__icontains=your_search_query) | Q(content__icontains=your_search_query)).order_by('pub_date')
