@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block body %}
-    <h1 class="text-center">this is... not Craigslist</h1>
+    <h1 class="text-center">this is... notCraigslist</h1>
     <h2>{{ city.city }}</h2>
 
     <hr>
@@ -16,7 +16,7 @@
             {% else %}
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Login to cl</h3>
+                    <h3 class="panel-title">Login to notCraigslist</h3>
                 </div>
                 <div class="panel-body">
                     <form class="" action="{% url 'login' %}" method="post">

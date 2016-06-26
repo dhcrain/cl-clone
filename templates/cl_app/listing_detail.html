@@ -8,9 +8,13 @@
     <br>
     <p>{{ object.description }}</p>
     <br>
-    <p> contact: {{ profile.preferred_contact }}</p>
+    <p> contact: {{ object.user.profile.preferred_contact }}</p>
     <br>
     <div>
         <p class="postinfo">post id: {{ object.id }}</p> <p class="postinfo">posted: <span class="timel">{{ object.created }}</span></p>
     </div>
+    {% if object.user = request.user %}
+        <a href="{% url 'listing_update_view' object.id %}">Update Your Listing</a>
+        <a href="{% url 'listing_delete_view' object.pk %}">Delete</a>
+    {% endif %}
 {% endblock %}

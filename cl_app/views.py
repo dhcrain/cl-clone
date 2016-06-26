@@ -2,7 +2,7 @@ from django.shortcuts import render
 from cl_app.models import Listing, Profile, ListingType, City
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView, CreateView, DetailView
-from django.views.generic.edit import UpdateView
+from django.views.generic.edit import UpdateView, DeleteView
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -28,13 +28,13 @@ class IndexView(ListView):
 
 class RegisterView(CreateView):
     form_class = UserCreationForm
-    success_url = reverse_lazy("profile_view")
+    success_url = reverse_lazy("login")
     model = User
 
 class ListingCreateView(CreateView):
     model = Listing
     fields = ['listing_city', 'title', 'price', 'description', 'photo']
-    success_url = reverse_lazy("index_view")
+    success_url = reverse_lazy("index_view")  # change to listing page
 
     def form_valid(self, form):
         listing = form.save(commit=False)
@@ -43,6 +43,25 @@ class ListingCreateView(CreateView):
         listing.category = ListingType.objects.get(id=category_id)
         return super().form_valid(form)
 
+
+class ListingUpdateView(UpdateView):
+    model = Listing
+    fields = ['listing_city', 'title', 'price', 'description', 'photo']
+
+    def get_success_url(self):
+        return reverse_lazy("listing_detail_view", args = (self.object.id,))
+
+class ListingDeleteView(DeleteView):
+    model = Listing
+    success_url = reverse_lazy('profile_view')
+
+    def get_object(self, queryset=None):
+        listing = super().get_object()
+        if not listing.user == self.request.user:
+            raise Http404
+        # hashid = Listing.objects.get(id=link.id)
+        # self.hashid = hashid
+        return listing
 
 class ListingTypeCreateView(CreateView):
     # model = ListingType
@@ -99,7 +118,8 @@ class ListingDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['profile'] = Profile.objects.get(user=self.request.user)
+        if self.request.user.is_authenticated():
+            context['profile'] = Profile.objects.get(user=self.request.user)
         return context
 
 
@@ -119,8 +139,14 @@ class CategoryListView(ListView):
     #     return context
 
 class ProfileView(UpdateView):
-    fields = ['city', 'preferred_contact']
+    fields = ['profile_city', 'preferred_contact']
     success_url = reverse_lazy("index_view")
+    # model = Profile
     # Why dont I have to declare a model here??
     def get_object(self, queryset=None):
         return self.request.user.profile
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user_listings'] = Listing.objects.filter(user=self.request.user)
+        return context

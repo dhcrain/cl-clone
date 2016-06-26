@@ -12,8 +12,8 @@ class City(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField('auth.User')
-    profile_city = models.ForeignKey(City)
-    preferred_contact = models.CharField(max_length=30)
+    profile_city = models.ForeignKey(City, verbose_name='Preferred City', null=True)
+    preferred_contact = models.CharField(max_length=30, null=True)
 
     def __str__(self):
         return self.user

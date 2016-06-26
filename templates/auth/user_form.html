@@ -2,9 +2,11 @@
 
 {% block body %}
 <h1>Make a new user</h1>
-<form class="form-center text-center" action="" method="post">
+<br>
+<form class="form-center" action="" method="post">
     {% csrf_token %}
     {{ form.as_p }}
+    <br>
     <input class="btn btn-default" type="submit" name="signup" value="Sign Up">
 </form>
 {% endblock %}

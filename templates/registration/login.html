@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block body %}
+<h1>notCraigslist</h1>
+<form class="form-center text-center" action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input class="btn btn-default" type="submit" name="updateprofile" value="Update Profile">
+</form>
+{% endblock %}

@@ -1,10 +1,38 @@
 {% extends "base.html" %}
 
 {% block body %}
-<h1>Update your profile</h1>
-<form class="form-center text-center" action="" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input class="btn btn-default" type="submit" name="updateprofile" value="Update Profile">
-</form>
+    <h1 class="text-center">Your profile</h1>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-md-4">
+            <form class="form-center text-center" action="" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input class="btn btn-default" type="submit" name="updateprofile" value="Update Profile">
+            </form>
+        </div>
+        <div class="col-md-8">
+            <h2>Your items for sale</h2>
+            <br>
+            {% for item in user_listings %}
+            <div class="row listing-list">
+                <p><small>&#9734;</small>
+                    <span class="time">{{ item.created|date:"N d" }} </span>
+                    <a href="{% url 'listing_detail_view' item.pk %}">{{ item.title }} </a>
+                    <span class="price">${{ item.price }}</span>
+                    <small>({{ item.listing_city }}) </small>
+                    {% if item.photo %}
+                    <span class="pic">pic</span>
+                    {% endif %}
+                </p>
+            </div>
+            {% empty %}
+            <h4>Sorry, no items in this list.</h4>
+            {% endfor %}
+        </div>
+    </div>
+
+
+
 {% endblock %}

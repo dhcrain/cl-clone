@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from cl_app.views import IndexView, RegisterView, ListingTypeCreateView, ListingCreateView, ListingDetailView, ProfileView, CityListView, CategoryListView, CityCategoryListView
+from cl_app.views import IndexView, RegisterView, ListingUpdateView, ListingDeleteView, ListingTypeCreateView, ListingCreateView, ListingDetailView, ProfileView, CityListView, CategoryListView, CityCategoryListView
 from django.conf.urls.static import static
 from django.conf import settings
 
@@ -28,6 +28,8 @@ urlpatterns = [
     url('^register/profile/$', ProfileView.as_view(), name='profile_view'),
     # url('^listingtype/$', ListingTypeCreateView.as_view(), name='listing_type_create_view'),
     url('^listingcreate/(?P<categorypk>\d+)$', ListingCreateView.as_view(), name='listing_create_view'),
+    url('^listingupdate/(?P<pk>\d+)$', ListingUpdateView.as_view(), name='listing_update_view'),
+    url('^listingdelete/(?P<pk>\d+)$', ListingDeleteView.as_view(), name='listing_delete_view'),
     url('^listing/(?P<pk>\d+)/$', ListingDetailView.as_view(), name='listing_detail_view'),
     url('^catergory/(?P<categorypk>\d+)/$', CategoryListView.as_view(), name='category_list_view'),
     url('^city/(?P<city>\d+)/$', CityListView.as_view(), name='city_list_view'),

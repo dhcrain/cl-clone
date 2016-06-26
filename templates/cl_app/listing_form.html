@@ -7,7 +7,6 @@
             <h3 class="panel-title">New Listing</h3>
         </div>
             <div class="panel-body">
-                {# <img src="{{ request.user.profile.photo_url }}" alt="" />#}
                 <form class="" action="" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ form.as_p }}
