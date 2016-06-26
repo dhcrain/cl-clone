@@ -1,13 +1,97 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 
 {% block body %}
-    <h1>Looking at {% if category %}{{ category }}{% else %}items{% endif %} in {% if city %}{{ city }}{% else %}All Cities{% endif %}</h1>
+    <h1>
+        {% if city %}
+        {{ city }} >
+        {% else %}
+        All Cities
+        {% endif %}
+        {% if category %}
+            {{ category }}
+        {% else %}
+            items
+        {% endif %}
+    </h1>
     {% if category %}
-    <a href="{% url 'listing_create_view' category.pk %}">New Listing</a></li>
+    <a class="btn btn-success"href="{% url 'listing_create_view' category.pk %}">Add New Listing</a></li>
     {% endif %}
-    {% for item in object_list %}
+
+    <div class="btn-group pull-right" role="group">
+        <a href="#" id="list" class="btn btn-default">List</a>
+        <a href="#" id="grid" class="btn btn-default">Grid</a>
+        <a href="#" id="thumb" class="btn btn-default">Thumbnails</a>
+    </div>
+{# start content #}
     <br>
-    <div class="row listing-list">
+    <div class="row" id="listings">
+        {% for item in object_list %}
+        <div class="item listing-list">
+            <p><small>&#9734;</small>
+                <span class="time">{{ item.created|date:"N d" }} </span>
+                <a href="{% url 'listing_detail_view' item.pk %}">{{ item.title }} </a>
+                <span class="price">${{ item.price }}</span>
+                <small>({{ item.listing_city }}) </small>
+                {% if item.photo %}
+                <span class="pic">pic</span>
+                {% endif %}
+            </p>
+        </div>
+        {% empty %}
+            <h4>Sorry, no items in this list.</h4>
+        {% endfor %}
+    </div>
+    <br>
+
+    {# grid test #}
+    <div class="row">
+    {% for item in object_list %}
+        <div class="item col-md-4">
+            <div class="thumbnail">
+                <img src="{{ item.photo_url }}">
+                <div class="caption">
+                    <p><small>&#9734;</small>
+                        <span class="time">{{ item.created|date:"N d" }} </span>
+                        <a href="{% url 'listing_detail_view' item.pk %}">{{ item.title }} </a>
+                        <span class="price">${{ item.price }}</span>
+                        <small>({{ item.listing_city }}) </small>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+    {# thumbnail test #}
+    {% for item in object_list %}
+    <div class="panel panel-default">
+        <div class="row">
+            <div class="panel-body thumb-parent">
+                <div class="col-md-3">
+                    <img class="tumbnail" src="{{ item.photo_url }}">
+                </div>
+                <div class="col-md-9 thumb-text">
+                    <p><small>&#9734;</small>
+                        <span class="time">{{ item.created|date:"N d" }} </span>
+                        <a href="{% url 'listing_detail_view' item.pk %}">{{ item.title }} </a>
+                        <span class="price">${{ item.price }}</span>
+                        <small>({{ item.listing_city }}) </small>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="{% static 'cl_app/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'cl_app/js/main.js' %}"></script>
+
+{# backup of orginal #}
+<div class="row" id="listings">
+    {% for item in object_list %}
+    <div class="item listing-list">
         <p><small>&#9734;</small>
             <span class="time">{{ item.created|date:"N d" }} </span>
             <a href="{% url 'listing_detail_view' item.pk %}">{{ item.title }} </a>
@@ -21,5 +105,5 @@
     {% empty %}
         <h4>Sorry, no items in this list.</h4>
     {% endfor %}
-    <br>
+</div>
 {% endblock %}

@@ -48,3 +48,35 @@ span.pic {
     border-bottom: 1px dotted #999;
     zoom: 1;
 }
+.tsb ul {
+    margin-left: 20px;
+    list-style-type: disc;
+}
+.tsb {
+    border: 1px solid #eee;
+    padding: 5px 8px;
+    font-size: small;
+    display: block;
+}
+.mapAndAttrs {
+    float: right;
+    margin-left: 1em;
+    margin-top: 5em;
+    vertical-align: top;
+    width: 280px;
+}
+.tumbnail {
+    height: 125px;
+}
+.thumb-parent {
+    position: relative;
+}
+.thumb-text {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.thumb-text p {
+    margin-left: 250px;
+    font-size: 1.5em;
+}

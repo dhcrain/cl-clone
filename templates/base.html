@@ -19,14 +19,10 @@
                 <li role="presentation"><a href="{% url 'register_view' %}">Get an account</a></li>
             {% endif %}
         </ul>
+        
         {% block hero %}
-        <div class="hero-block row">
-                <div class="col-md-6 hero-text">
-                    <h2></h2>
-                </div>
-                <div class="col-md-6"></div>
-            <br>
-        </div>
+        <p class="text-center">To post a new listing, go to the category you would like to place it in and click the Add New Listing button.</p>
+
         {% endblock %}
         <div class="container">
             {% block body %}

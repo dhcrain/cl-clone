@@ -34,7 +34,7 @@ class RegisterView(CreateView):
 class ListingCreateView(CreateView):
     model = Listing
     fields = ['listing_city', 'title', 'price', 'description', 'photo']
-    success_url = reverse_lazy("index_view")  # change to listing page
+    # success_url = reverse_lazy("profile_detail_view")  # change to listing page
 
     def form_valid(self, form):
         listing = form.save(commit=False)
@@ -43,6 +43,8 @@ class ListingCreateView(CreateView):
         listing.category = ListingType.objects.get(id=category_id)
         return super().form_valid(form)
 
+    def get_success_url(self):
+        return reverse_lazy("listing_detail_view", args = (self.object.id,))
 
 class ListingUpdateView(UpdateView):
     model = Listing
@@ -59,8 +61,6 @@ class ListingDeleteView(DeleteView):
         listing = super().get_object()
         if not listing.user == self.request.user:
             raise Http404
-        # hashid = Listing.objects.get(id=link.id)
-        # self.hashid = hashid
         return listing
 
 class ListingTypeCreateView(CreateView):
@@ -90,10 +90,6 @@ class CityListView(ListView):
         else:
             context["login_form"] = AuthenticationForm()
         return context
-
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-
 
 
 class CityCategoryListView(ListView):
@@ -130,13 +126,6 @@ class CategoryListView(ListView):
         category_id = self.kwargs.get('categorypk', None)
         return Listing.objects.filter(category=category_id)
 
-    # def get_queryset(self, **kwargs):
-    #     # category_id = self.kwargs.get('categorypk', None)
-    #     category_id = self.kwargs.get('categorypk')
-    #     context = super().get_context_data(**kwargs)
-    #     context['object_list'] = Listing.objects.filter(category=category_id)
-    #     context['category'] = ListingType.objects.get(id=category_id)
-    #     return context
 
 class ProfileView(UpdateView):
     fields = ['profile_city', 'preferred_contact']

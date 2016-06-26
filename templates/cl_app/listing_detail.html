@@ -1,11 +1,27 @@
 {% extends "base.html" %}
 
 {% block body %}
-    <h1>Your listing</h1>
-    <h2 class="postingtitle"><small>&#9734;</small> {{ object.title }} <span> -  ${{ object.price }}</span><small> ({{ object.listing_city }})</small></h2>
-    <img src="{{ object.photo_url }}" alt="" />
-    <br>
-    <br>
+    <div class="row">
+        <div class="col-md-7">
+            <h2 class="postingtitle"><small>&#9734;</small> {{ object.title }} <span> -  ${{ object.price }}</span><small> ({{ object.listing_city }})</small></h2>
+            <br>
+            <img src="{{ object.photo_url }}" alt="" />
+            <br>
+            <br>
+        </div>
+        <div class="col-md-5">
+            <div class="mapAndAttrs pull-left">
+            <div class="tsb">
+                <ul>
+                    <li><a href="//www.craigslist.org/about/safety">safety tips</a>
+                    <li><a href="//www.craigslist.org/about/prohibited">prohibited items</a>
+                    <li><a href="//www.craigslist.org/about/recalled_items">product recalls</a>
+                    <li><a href="//www.craigslist.org/about/scams">avoiding scams</a>
+                </ul>
+            </div>
+            </div>
+        </div>
+    </div>
     <p>{{ object.description }}</p>
     <br>
     <p> contact: {{ object.user.profile.preferred_contact }}</p>
@@ -15,6 +31,7 @@
     </div>
     {% if object.user = request.user %}
         <a href="{% url 'listing_update_view' object.id %}">Update Your Listing</a>
+        <br>
         <a href="{% url 'listing_delete_view' object.pk %}">Delete</a>
     {% endif %}
 {% endblock %}
