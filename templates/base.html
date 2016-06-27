@@ -15,26 +15,19 @@
                 <li role="presentation" class=""><a href="{% url 'profile_view' %}">Your Profile</a></li>
                 <li role="presentation" class="pull-right"><a href="{% url 'logout' %}?next={% url 'index_view' %}">Log Out</a></li>
                 <li role="presentation" class="disabled pull-right"><a href="#">Welcome {{ request.user }}</a></li>
-
-
-                <form id="searchform" action="{% url 'search_list_view' %}" method="get" accept-charset="utf-8">
-                    <div class="input-group col-md-3 pull-right">
-                        <input class="form-control" id="searchbox" name="q" type="text" placeholder="Search for...">
-                        <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">Go!</button>
-                        </span>
-                    </div>
-                </form>
-                {# <i class="fa fa-search"></i>#}
-
-                {# <button class="searchbutton" type="submit">#}
-                {# </button>#}
-                {# <input type="text" class="form-control" placeholder="Search for...">#}
-
-
             {% else %}
                 <li role="presentation"><a href="{% url 'register_view' %}">Get an account</a></li>
+                <li role="presentation"><a href="{% url 'login' %}">Login</a></li>
             {% endif %}
+            {# search #}
+            <form id="searchform" action="{% url 'search_list_view' %}" method="get" accept-charset="utf-8">
+                <div class="input-group col-md-3 pull-right">
+                    <input class="form-control" id="searchbox" name="q" type="text" placeholder="Search for...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">Go!</button>
+                    </span>
+                </div>
+            </form>
         </ul>
 
         {% block hero %}

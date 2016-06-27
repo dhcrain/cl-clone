@@ -3,16 +3,19 @@
 {% block body %}
     <h1 class="text-center">this is... notCraigslist</h1>
     <h2>{{ city.city }}</h2>
-
     <hr>
     <div class="row">
         <div class="col-md-3">
             {% if request.user.is_authenticated %}
-            <h2>Hello {{ request.user }}, <br>
-                <small>Would you like to go to your perfered city page,
+            <h2>Hello {{ request.user }},
+                {% if profile.profile_city %}
+                <br><small>Would you like to go to your perfered city page,
                 <a href="{% url 'city_list_view' profile.profile_city.pk %}">{{ profile.profile_city }}</a>?</small>
+                {% else %}
+                <br><small>You do not have a saved perfered city, please update your profile.
+                    <a class="btn btn-default" href="{% url 'profile_view' %}">Update Profile</a></small>
+                {% endif %}
             </h2>
-            <br>
             {% else %}
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -50,10 +53,4 @@
             {% endfor %}
         </div>
     </div>
-
-
-
-
-
-
 {% endblock %}

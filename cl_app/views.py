@@ -133,7 +133,7 @@ class CategoryListView(ListView):
 class ProfileView(UpdateView):
     fields = ['profile_city', 'preferred_contact']
     success_url = reverse_lazy("index_view")
-    # model = Profile
+
     # Why dont I have to declare a model here??
     def get_object(self, queryset=None):
         return self.request.user.profile
@@ -146,16 +146,14 @@ class ProfileView(UpdateView):
 # modified from https://www.calazan.com/adding-basic-search-to-your-django-site/
 class SearchListView(ListView):
     model = Listing
-    
+
     def get_queryset(self):
         result = super().get_queryset()
         query = self.request.GET.get('q')
         if query:
             query_list = query.split()
             result = result.filter(
-                reduce(operator.and_,
-                       (Q(title__icontains=q) for q in query_list)) |
-                reduce(operator.and_,
-                       (Q(description__icontains=q) for q in query_list))
+                reduce(operator.and_, (Q(title__icontains=q) for q in query_list)) |
+                reduce(operator.and_, (Q(description__icontains=q) for q in query_list))
             )
         return result

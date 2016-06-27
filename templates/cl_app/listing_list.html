@@ -5,14 +5,14 @@
     <h1>
         {% if q %}Q{% endif %}
         {% if city %}
-        {{ city }} >
+            {{ city }} >
         {% else %}
-        All Cities
+            All Cities >
         {% endif %}
         {% if category %}
             {{ category }}
         {% else %}
-            item's
+            All item's
         {% endif %}
     </h1>
     {% if category %}
@@ -26,6 +26,7 @@
     </div>
 {# start content #}
     <br>
+    {# list #}
     <div class="row" id="list">
         {% for item in object_list %}
         <div class="item listing-list">
@@ -44,25 +45,26 @@
         {% endfor %}
     </div>
     <br>
-
-    {# grid test #}
+    {# grid #}
     <div class="row" id="grid">
     {% for item in object_list %}
-        <div class="item col-md-4">
-            <div class="thumbnail">
-                <img src="{{ item.photo_url }}">
-                <div class="caption">
-                    <p><small>&#9734;</small>
-                        <span class="time">{{ item.created|date:"N d" }} </span>
-                        <a href="{% url 'listing_detail_view' item.pk %}">{{ item.title }} </a>
-                        <span class="price">${{ item.price }}</span>
-                        <small>({{ item.listing_city }}) </small>
-                </div>
+    <div class="item col-md-4">
+        <div class="thumbnail">
+            <img src="{{ item.photo_url }}">
+            <div class="caption">
+                <p><small>&#9734;</small>
+                    <span class="time">{{ item.created|date:"N d" }} </span>
+                    <a href="{% url 'listing_detail_view' item.pk %}">{{ item.title }} </a>
+                    <span class="price">${{ item.price }}</span>
+                    <small>({{ item.listing_city }}) </small>
             </div>
         </div>
+    </div>
+    {% empty %}
+        <h4>Sorry, no items in this list.</h4>
     {% endfor %}
     </div>
-    {# thumbnail test #}
+    {# thumbnail #}
     <div id="thumb">
     {% for item in object_list %}
     <div class="panel panel-default">
@@ -82,6 +84,8 @@
             </div>
         </div>
     </div>
+    {% empty %}
+        <h4>Sorry, no items in this list.</h4>
     {% endfor %}
     </div>
 
