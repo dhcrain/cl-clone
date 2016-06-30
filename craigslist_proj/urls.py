@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from cl_app.views import IndexView, RegisterView, SearchListView, ListingUpdateView, ListingDeleteView, ListingTypeCreateView, ListingCreateView, ListingDetailView, ProfileView, CityListView, CategoryListView, CityCategoryListView
+from cl_api.views import ListingListCreateAPIView, ListingRetrieveUpdateAPIView
 from django.conf.urls.static import static
 from django.conf import settings
 
@@ -34,5 +35,10 @@ urlpatterns = [
     url('^catergory/(?P<categorypk>\d+)/$', CategoryListView.as_view(), name='category_list_view'),
     url('^city/(?P<city>\d+)/$', CityListView.as_view(), name='city_list_view'),
     url('^city/(?P<citypk>\d+)/(?P<categorypk>\d+)/$', CityCategoryListView.as_view(), name='city_category_list_view'),
+    url('^api/listings/$', ListingListCreateAPIView.as_view(), name='listing-list'),
+    url('^api/listings/(?P<pk>\d+)/$', ListingRetrieveUpdateAPIView.as_view(), name='listing-detail'),
+    url('^api/categories/$', CategoryListCreateAPIView.as_view(), name='listing-list'),
+
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
