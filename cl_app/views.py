@@ -47,6 +47,7 @@ class ListingCreateView(CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
+        # return reverse("listing_detail_view", args = (self.object.id,)) can maybe change to this.
         return reverse_lazy("listing_detail_view", args = (self.object.id,))
 
 class ListingUpdateView(UpdateView):

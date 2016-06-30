@@ -16,7 +16,7 @@
         {% endif %}
     </h1>
     {% if category %}
-    <a class="btn btn-success"href="{% url 'listing_create_view' category.pk %}">Add New Listing</a></li>
+    <a class="btn btn-success"href="{% url 'listing_create_view' category.pk %}">Add New Listing</a>
     {% endif %}
 {# Yeah, I think isn'y quite the ideal way to impliment this, lots of repetition #}
     <div class="btn-group pull-right" role="group">
