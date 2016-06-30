@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from cl_app.views import IndexView, RegisterView, SearchListView, ListingUpdateView, ListingDeleteView, ListingTypeCreateView, ListingCreateView, ListingDetailView, ProfileView, CityListView, CategoryListView, CityCategoryListView
-from cl_api.views import ListingListCreateAPIView, ListingRetrieveUpdateAPIView, CategoryListAPIView, CategoryRetriveAPIView, SubCategoryListAPIView, SubCategoryRetriveAPIView, CategoryListingListAPIView, CategoryListingRetriveAPIView
+from cl_api.views import ListingListCreateAPIView, ListingRetrieveUpdateAPIView, CategoryListAPIView, CategoryRetriveAPIView, SubCategoryListAPIView, SubCategoryRetriveAPIView, CategoryListingListAPIView, SubCategoryListingListAPIView
 from django.conf.urls.static import static
 from django.conf import settings
 
@@ -35,14 +35,17 @@ urlpatterns = [
     url('^catergory/(?P<categorypk>\d+)/$', CategoryListView.as_view(), name='category_list_view'),
     url('^city/(?P<city>\d+)/$', CityListView.as_view(), name='city_list_view'),
     url('^city/(?P<citypk>\d+)/(?P<categorypk>\d+)/$', CityCategoryListView.as_view(), name='city_category_list_view'),
+
     url('^api/listings/$', ListingListCreateAPIView.as_view(), name='listing-list'),
     url('^api/listings/(?P<pk>\d+)/$', ListingRetrieveUpdateAPIView.as_view(), name='listing-detail'),
+
     url('^api/categories/$', CategoryListAPIView.as_view(), name='categories-list'),
     url('^api/categories/(?P<pk>\d+)/$', CategoryRetriveAPIView.as_view(), name='categories-detail'),
+
     url('^api/sub_categories/$', SubCategoryListAPIView.as_view(), name='sub-categories-list'),
     url('^api/sub_categories/(?P<pk>\d+)/$', SubCategoryRetriveAPIView.as_view(), name='sub-categories-detail'),
     url('^api/category_listings/(?P<pk>\d+)/$', CategoryListingListAPIView.as_view(), name='category-listings-list'),
-    url('^api/category_listings/(?P<pk>\d+)/(?P<listing_pk>\d+)/$', CategoryListingRetriveAPIView.as_view(), name='category-listings-detail'),
+    url('^api/sub_category_listings/(?P<pk>\d+)/$', SubCategoryListingListAPIView.as_view(), name='sub-category-listings-list'),
 
 
 

@@ -47,14 +47,11 @@ class CategoryListingListAPIView(generics.ListAPIView):
 
     def get_queryset(self, **kwargs):
         cat_pk = self.kwargs.get('pk')
-        return Listing.objects.filter(category=cat_pk)
+        return Listing.objects.filter(category__parent=cat_pk)
 
-class CategoryListingRetriveAPIView(generics.RetrieveAPIView):
+class SubCategoryListingListAPIView(generics.ListAPIView):
     serializer_class = ListingSerializer
 
     def get_queryset(self, **kwargs):
         cat_pk = self.kwargs.get('pk')
-        listing_pk = self.kwargs.get('listing_pk')
-        print(cat_pk)
-        print(listing_pk)
-        return Listing.objects.get(pk=listing_pk)
+        return Listing.objects.filter(category=cat_pk)
