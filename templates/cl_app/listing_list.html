@@ -3,7 +3,6 @@
 
 {% block body %}
     <h1>
-        {% if q %}Q{% endif %}
         {% if city %}
             {{ city }} >
         {% else %}
@@ -15,16 +14,20 @@
             All item's
         {% endif %}
     </h1>
+    {% if user.is_authenticated %}
     {% if category %}
     <a class="btn btn-success"href="{% url 'listing_create_view' category.pk %}">Add New Listing</a>
     {% endif %}
-{# Yeah, I think isn'y quite the ideal way to impliment this, lots of repetition #}
+    {% else %}
+    <a href="{% url 'login' %}">Login to post a listing.</a>
+    {% endif %}
+    {# Yeah, I think isn'y quite the ideal way to impliment this, lots of repetition #}
     <div class="btn-group pull-right" role="group">
         <a href="#" id="listb" class="btn btn-default">List</a>
         <a href="#" id="gridb" class="btn btn-default">Grid</a>
         <a href="#" id="thumbb" class="btn btn-default">Thumbnails</a>
     </div>
-{# start content #}
+    {# start content #}
     <br>
     {# list #}
     <div class="row" id="list">

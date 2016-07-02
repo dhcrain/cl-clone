@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from cl_app.views import IndexView, RegisterView, SearchListView, ListingUpdateView, ListingDeleteView, ListingTypeCreateView, ListingCreateView, ListingDetailView, ProfileView, CityListView, CategoryListView, CityCategoryListView
-from cl_api.views import ListingListCreateAPIView, ListingRetrieveUpdateAPIView, CategoryListAPIView, CategoryRetriveAPIView, SubCategoryListAPIView, SubCategoryRetriveAPIView, CategoryListingListAPIView, SubCategoryListingListAPIView, CreateUserAPIView
+from cl_api.views import ListingListCreateAPIView, ListingRetrieveUpdateAPIView, CategoryListCreateAPIView, CategoryRetriveUpdateAPIView, SubCategoryListCreateAPIView, SubCategoryRetriveUpdateAPIView, CategoryListingListAPIView, SubCategoryListingListAPIView, UserCreateAPIView
 from django.conf.urls.static import static
 from django.conf import settings
 from rest_framework.authtoken import views
@@ -39,15 +39,15 @@ urlpatterns = [
     url(r'^city/(?P<citypk>\d+)/(?P<categorypk>\d+)/$', CityCategoryListView.as_view(), name='city_category_list_view'),
     # Start API urls
     url(r'^api-token-auth/', views.obtain_auth_token),
-    url(r'^api/register/$', CreateUserAPIView.as_view(), name='create_user_view'),
+    url(r'^api/register/$', UserCreateAPIView.as_view(), name='create_user_view'),
     url(r'^api/listings/$', ListingListCreateAPIView.as_view(), name='listing-list'),
     url(r'^api/listings/(?P<pk>\d+)/$', ListingRetrieveUpdateAPIView.as_view(), name='listing-detail'),
 
-    url(r'^api/categories/$', CategoryListAPIView.as_view(), name='categories-list'),
-    url(r'^api/categories/(?P<pk>\d+)/$', CategoryRetriveAPIView.as_view(), name='categories-detail'),
+    url(r'^api/categories/$', CategoryListCreateAPIView.as_view(), name='categories-list'),
+    url(r'^api/categories/(?P<pk>\d+)/$', CategoryRetriveUpdateAPIView.as_view(), name='categories-detail'),
 
-    url(r'^api/sub_categories/$', SubCategoryListAPIView.as_view(), name='sub-categories-list'),
-    url(r'^api/sub_categories/(?P<pk>\d+)/$', SubCategoryRetriveAPIView.as_view(), name='sub-categories-detail'),
+    url(r'^api/sub_categories/$', SubCategoryListCreateAPIView.as_view(), name='sub-categories-list'),
+    url(r'^api/sub_categories/(?P<pk>\d+)/$', SubCategoryRetriveUpdateAPIView.as_view(), name='sub-categories-detail'),
 
     url(r'^api/category_listings/(?P<pk>\d+)/$', CategoryListingListAPIView.as_view(), name='category-listings-list'),
     url(r'^api/sub_category_listings/(?P<pk>\d+)/$', SubCategoryListingListAPIView.as_view(), name='sub-category-listings-list'),

@@ -21,7 +21,7 @@ class ListingRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
     permission_classes = (IsOwnerOrReadOnly,)
 
 
-class CategoryListAPIView(generics.ListCreateAPIView):
+class CategoryListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = ListingTypeSerializer
     permission_classes = (IsSuperUserOrReadOnly,)
 
@@ -29,7 +29,7 @@ class CategoryListAPIView(generics.ListCreateAPIView):
         return ListingType.objects.filter(parent=None)
 
 
-class CategoryRetriveAPIView(generics.RetrieveUpdateAPIView):
+class CategoryRetriveUpdateAPIView(generics.RetrieveUpdateAPIView):
     serializer_class = ListingTypeSerializer
     permission_classes = (IsSuperUserOrReadOnly,)
 
@@ -37,7 +37,7 @@ class CategoryRetriveAPIView(generics.RetrieveUpdateAPIView):
         return ListingType.objects.filter(parent=None)
 
 
-class SubCategoryListAPIView(generics.ListCreateAPIView):
+class SubCategoryListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = ListingTypeSerializer
     permission_classes = (IsSuperUserOrReadOnly,)
 
@@ -45,7 +45,7 @@ class SubCategoryListAPIView(generics.ListCreateAPIView):
         return ListingType.objects.exclude(parent=None)
 
 
-class SubCategoryRetriveAPIView(generics.RetrieveUpdateAPIView):
+class SubCategoryRetriveUpdateAPIView(generics.RetrieveUpdateAPIView):
     serializer_class = ListingTypeSerializer
     permission_classes = (IsSuperUserOrReadOnly,)
 
@@ -67,7 +67,7 @@ class SubCategoryListingListAPIView(generics.ListAPIView):
         cat_pk = self.kwargs.get('pk')
         return Listing.objects.filter(category=cat_pk)
 
-class CreateUserAPIView(generics.CreateAPIView):
+class UserCreateAPIView(generics.CreateAPIView):
     model = get_user_model()
     permission_classes = [permissions.AllowAny]
     serializer_class = UserSerializer

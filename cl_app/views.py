@@ -3,12 +3,12 @@ from functools import reduce
 from django.db.models import Q
 from django.shortcuts import render
 from cl_app.models import Listing, Profile, ListingType, City
-from django.views.generic.base import TemplateView
 from django.views.generic import ListView, CreateView, DetailView, FormView
+from django.views.generic.base import TemplateView
 from django.views.generic.edit import UpdateView, DeleteView
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse_lazy
 
 
@@ -34,10 +34,14 @@ class RegisterView(CreateView):
     success_url = reverse_lazy("login")
     model = User
 
-class ListingCreateView(CreateView):
+class ListingCreateView(LoginRequiredMixin, CreateView):
+    login_url = '/login/'
     model = Listing
     fields = ['listing_city', 'title', 'price', 'description', 'photo']
     # success_url = reverse_lazy("profile_detail_view")  # change to listing page
+
+    # if not request.user.is_authenticated():
+    #     redirect('login')
 
     def form_valid(self, form):
         listing = form.save(commit=False)
@@ -47,8 +51,7 @@ class ListingCreateView(CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        # return reverse("listing_detail_view", args = (self.object.id,)) can maybe change to this.
-        return reverse_lazy("listing_detail_view", args = (self.object.id,))
+        return reverse("listing_detail_view", args = (self.object.id,))
 
 class ListingUpdateView(UpdateView):
     model = Listing
