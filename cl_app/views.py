@@ -9,7 +9,8 @@ from django.views.generic.edit import UpdateView, DeleteView
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse_lazy, reverse
+
 
 
 class IndexView(ListView):
@@ -38,10 +39,6 @@ class ListingCreateView(LoginRequiredMixin, CreateView):
     login_url = '/login/'
     model = Listing
     fields = ['listing_city', 'title', 'price', 'description', 'photo']
-    # success_url = reverse_lazy("profile_detail_view")  # change to listing page
-
-    # if not request.user.is_authenticated():
-    #     redirect('login')
 
     def form_valid(self, form):
         listing = form.save(commit=False)
@@ -53,14 +50,14 @@ class ListingCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse("listing_detail_view", args = (self.object.id,))
 
-class ListingUpdateView(UpdateView):
+class ListingUpdateView(LoginRequiredMixin, UpdateView):
     model = Listing
     fields = ['listing_city', 'title', 'price', 'description', 'photo']
 
     def get_success_url(self):
-        return reverse_lazy("listing_detail_view", args = (self.object.id,))
+        return reverse("listing_detail_view", args = (self.object.id,))
 
-class ListingDeleteView(DeleteView):
+class ListingDeleteView(LoginRequiredMixin, DeleteView):
     model = Listing
     success_url = reverse_lazy('profile_view')
 
@@ -134,7 +131,7 @@ class CategoryListView(ListView):
         return Listing.objects.filter(category=category_id)
 
 
-class ProfileView(UpdateView):
+class ProfileView(LoginRequiredMixin, UpdateView):
     fields = ['profile_city', 'preferred_contact']
     success_url = reverse_lazy("index_view")
 
