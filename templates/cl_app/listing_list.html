@@ -21,6 +21,13 @@
     {% else %}
     <a href="{% url 'login' %}">Login to post a listing.</a>
     {% endif %}
+    <br>
+    <br>
+    <div class="btn-group pull-left" role="group">
+        <a href="{% url 'city_category_list_view' city_id category_id %}?sort=-created"  class="btn btn-default">Sort: Date</a>
+        <a href="{% url 'city_category_list_view' city_id category_id %}?sort=price"  class="btn btn-default">Sort: Price Low/High</a>
+        <a href="{% url 'city_category_list_view' city_id category_id %}?sort=-price"  class="btn btn-default">Sort: Price High/Low</a>
+    </div>
     {# Yeah, I think isn'y quite the ideal way to impliment this, lots of repetition #}
     <div class="btn-group pull-right" role="group">
         <a href="#" id="listb" class="btn btn-default">List</a>
@@ -28,6 +35,7 @@
         <a href="#" id="thumbb" class="btn btn-default">Thumbnails</a>
     </div>
     {# start content #}
+    <br>
     <br>
     {# list #}
     <div class="row" id="list">

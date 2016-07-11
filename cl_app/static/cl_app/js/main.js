@@ -1,7 +1,6 @@
 
 // yeah, i dont know what I am doing here....
 
-
 $(document).ready(function(){
     $('btn-group a:contains("listb")').prop('selected',true);
     $("#listb").click(function(){

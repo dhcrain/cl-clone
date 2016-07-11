@@ -102,7 +102,11 @@ class CityCategoryListView(ListView):
     def get_queryset(self, **kwargs):
         city_id = self.kwargs.get('citypk')
         category_id = self.kwargs.get('categorypk')
-        return Listing.objects.filter(listing_city=city_id).filter(category=category_id)
+        sort = self.request.GET.get('sort')
+        if sort:
+            return Listing.objects.filter(listing_city=city_id).filter(category=category_id).order_by(sort)
+        else:
+            return Listing.objects.filter(listing_city=city_id).filter(category=category_id)
 
     def get_context_data(self, **kwargs):
         city_id = self.kwargs.get('citypk')
@@ -110,6 +114,8 @@ class CityCategoryListView(ListView):
         context = super().get_context_data(**kwargs)
         context['city'] = City.objects.get(id=city_id)
         context['category'] = ListingType.objects.get(id=category_id)
+        context['category_id'] = category_id
+        context['city_id'] = city_id
         return context
 
 
@@ -127,8 +133,17 @@ class CategoryListView(ListView):
     model = Listing
 
     def get_queryset(self, **kwargs):
-        category_id = self.kwargs.get('categorypk', None)
-        return Listing.objects.filter(category=category_id)
+        category_id = self.kwargs.get('categorypk')
+        if sort:
+            return Listing.objects.filter(category=category_id).order_by(sort)
+        else:
+            return Listing.objects.filter(category=category_id)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['category_id'] = self.kwargs.get('categorypk')
+        return context
+
 
 
 class ProfileView(LoginRequiredMixin, UpdateView):
