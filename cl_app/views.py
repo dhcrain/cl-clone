@@ -173,3 +173,8 @@ class SearchListView(ListView):
                 reduce(operator.and_, (Q(description__icontains=q) for q in query_list))
             )
         return result
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['search'] = "search"
+        return context
