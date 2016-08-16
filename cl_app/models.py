@@ -18,7 +18,7 @@ class Profile(models.Model):
     preferred_contact = models.CharField(max_length=30, null=True)
 
     def __str__(self):
-        return self.user
+        return str(self.user)
 
 
 class ListingType(models.Model):
