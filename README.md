@@ -36,14 +36,26 @@ __Learning Objectives__
 
 Adapt an existing large project to include API endpoints that mimic existing functionality and constraints
 
-- Retrieve a list and detail of existing Categories
-- Retrieve a list and detail of existing Sub-Categories
+__Base URL:__ `https://cl-dhcrain.herokuapp.com/api/`
+
+- Retrieve a list and detail of existing Categories  
+    - `/categories/`  
+    - `/categories/:id/`
+- Retrieve a list and detail of existing Sub-Categories  
+    - `/sub_categories/`  
+    - `/sub_categories/:id/`
 - Retrieve a list and detail of existing Posts by Sub-category & by Category
+    - `/category_listings/:id/`
+    - `/sub_category_listings/:id/`
+- Allow a user to create new categories and sub-categories through the API - but ONLY if they have is_superuser flag on their account.
 - Retrieve a detail of a single post.
+    - `/listings/:id/`
 - Create a new Listing with all Foreign Key fields satisfied
+    - `/listings/`
 - Update an existing post. Include being able to change the Sub-Category the post belongs to.
 - Allow a user to create an account through the API and return the user their API Access Token
-- Allow a user to create new categories and sub-categories through the API - but ONLY if they have is_superuser flag on their account.
+    - `/register/`
+    - `/api-token-auth/`
 - A non logged in user can NEVER create or update ANY records.
 - A logged in user can NEVER update a record created by another user.
 - Use Basic or Token authentication to allow a user to authenticate.

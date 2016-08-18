@@ -38,7 +38,7 @@ urlpatterns = [
     url(r'^city/(?P<city>\d+)/$', CityListView.as_view(), name='city_list_view'),
     url(r'^city/(?P<citypk>\d+)/(?P<categorypk>\d+)/$', CityCategoryListView.as_view(), name='city_category_list_view'),
     # Start API urls
-    url(r'^api-token-auth/', views.obtain_auth_token),
+    url(r'^api/api-token-auth/', views.obtain_auth_token),
     url(r'^api/register/$', UserCreateAPIView.as_view(), name='create_user_view'),
     url(r'^api/listings/$', ListingListCreateAPIView.as_view(), name='listing-list'),
     url(r'^api/listings/(?P<pk>\d+)/$', ListingRetrieveUpdateAPIView.as_view(), name='listing-detail'),
