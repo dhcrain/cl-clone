@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'cl_app',
     'rest_framework',
     'rest_framework.authtoken',
+    'rest_framework_docs',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -139,4 +140,8 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     )
+}
+
+REST_FRAMEWORK_DOCS = {
+    'HIDE_DOCS': False
 }

@@ -1,8 +1,9 @@
 # Craigslist Clone w/ API
 
 [Live Demo](https://cl-dhcrain.herokuapp.com/)
+[API Documentation](https://cl-dhcrain.herokuapp.com/api/docs/)
 
-Create a craigslist clone from front to back. This project will require you to stretch both front end and back end knowledge.
+Create a Craigslist clone from front to back.
 
 __Learning Objectives__
 
