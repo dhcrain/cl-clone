@@ -1,6 +1,7 @@
 from rest_framework import permissions
 
-#http://www.django-rest-framework.org/api-guide/serializers/#additional-keyword-arguments
+
+# http://www.django-rest-framework.org/api-guide/serializers/#additional-keyword-arguments
 class IsOwnerOrReadOnly(permissions.BasePermission):
     """
     Object-level permission to only allow owners of an object to edit it.
@@ -14,6 +15,7 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
 
         # Instance must have an attribute named `user`.
         return obj.user == request.user
+
 
 # https://github.com/tomchristie/django-rest-framework/blob/master/rest_framework/permissions.py
 class IsSuperUserOrReadOnly(permissions.BasePermission):

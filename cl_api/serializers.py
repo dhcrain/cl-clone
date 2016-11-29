@@ -18,6 +18,7 @@ class ListingTypeSerializer(serializers.ModelSerializer):
         model = ListingType
         fields = ['id', 'name', 'parent']
 
+
 # http://www.django-rest-framework.org/api-guide/serializers/#additional-keyword-arguments
 class UserSerializer(serializers.ModelSerializer):
     class Meta:

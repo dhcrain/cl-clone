@@ -12,7 +12,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse_lazy, reverse
 
 
-
 class IndexView(ListView):
     template_name = "index.html"
     model = ListingType
@@ -30,10 +29,12 @@ class IndexView(ListView):
             context["login_form"] = AuthenticationForm()
         return context
 
+
 class RegisterView(CreateView):
     form_class = UserCreationForm
     success_url = reverse_lazy("login")
     model = User
+
 
 class ListingCreateView(LoginRequiredMixin, CreateView):
     login_url = '/login/'
@@ -48,14 +49,16 @@ class ListingCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse("listing_detail_view", args = (self.object.id,))
+        return reverse("listing_detail_view", args=(self.object.id,))
+
 
 class ListingUpdateView(LoginRequiredMixin, UpdateView):
     model = Listing
     fields = ['listing_city', 'title', 'price', 'description', 'photo']
 
     def get_success_url(self):
-        return reverse("listing_detail_view", args = (self.object.id,))
+        return reverse("listing_detail_view", args=(self.object.id,))
+
 
 class ListingDeleteView(LoginRequiredMixin, DeleteView):
     model = Listing
@@ -66,6 +69,7 @@ class ListingDeleteView(LoginRequiredMixin, DeleteView):
         if not listing.user == self.request.user:
             raise Http404
         return listing
+
 
 class ListingTypeCreateView(CreateView):
     # model = ListingType
@@ -145,7 +149,6 @@ class CategoryListView(ListView):
         return context
 
 
-
 class ProfileView(LoginRequiredMixin, UpdateView):
     fields = ['profile_city', 'preferred_contact']
     success_url = reverse_lazy("index_view")
@@ -158,6 +161,7 @@ class ProfileView(LoginRequiredMixin, UpdateView):
         context = super().get_context_data(**kwargs)
         context['user_listings'] = Listing.objects.filter(user=self.request.user)
         return context
+
 
 # modified from https://www.calazan.com/adding-basic-search-to-your-django-site/
 class SearchListView(ListView):

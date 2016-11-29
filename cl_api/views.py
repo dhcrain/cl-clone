@@ -60,12 +60,14 @@ class CategoryListingListAPIView(generics.ListAPIView):
         cat_pk = self.kwargs.get('pk')
         return Listing.objects.filter(category__parent=cat_pk)
 
+
 class SubCategoryListingListAPIView(generics.ListAPIView):
     serializer_class = ListingSerializer
 
     def get_queryset(self, **kwargs):
         cat_pk = self.kwargs.get('pk')
         return Listing.objects.filter(category=cat_pk)
+
 
 class UserCreateAPIView(generics.CreateAPIView):
     model = get_user_model()

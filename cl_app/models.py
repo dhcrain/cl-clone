@@ -59,6 +59,7 @@ def create_user_profile(**kwargs):
     if created:
         Profile.objects.create(user=instance)
 
+
 @receiver(post_save, sender='auth.User')
 def create_token(**kwargs):
     created = kwargs.get('created')
