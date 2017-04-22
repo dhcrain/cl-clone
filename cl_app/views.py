@@ -1,10 +1,10 @@
 import operator
 from functools import reduce
 from django.db.models import Q
-from django.shortcuts import render
+# from django.shortcuts import render
 from cl_app.models import Listing, Profile, ListingType, City
-from django.views.generic import ListView, CreateView, DetailView, FormView
-from django.views.generic.base import TemplateView
+from django.views.generic import ListView, CreateView, DetailView
+# from django.views.generic.base import TemplateView
 from django.views.generic.edit import UpdateView, DeleteView
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User

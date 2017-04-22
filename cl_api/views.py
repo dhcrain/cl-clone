@@ -1,4 +1,4 @@
-from django.shortcuts import render
+# from django.shortcuts import render
 from rest_framework import generics
 from rest_framework import permissions
 from django.contrib.auth import get_user_model
