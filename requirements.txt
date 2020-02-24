@@ -1,5 +1,5 @@
 Django==1.9.7
-djangorestframework==3.3.3
+djangorestframework==3.9.1
 drfdocs==0.0.11
 gunicorn==19.6.0
 dj-database-url==0.4.2
