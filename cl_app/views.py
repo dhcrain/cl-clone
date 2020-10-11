@@ -10,6 +10,15 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse_lazy, reverse
+from django.core.exceptions import PermissionDenied
+
+class OwnershipRequired():
+    def dispatch(self,request,*args,**kwargs):
+        pk = kwargs["pk"]
+        listing = Listing.objects.get(pk=pk)
+        if not (listing.user.id == request.user.id) and not request.user.has_perm(self.bypasspermission):
+            raise PermissionDenied
+        return super(OwnershipRequired,self).dispatch(request,*args,**kwargs)
 
 
 class IndexView(ListView):
@@ -52,23 +61,18 @@ class ListingCreateView(LoginRequiredMixin, CreateView):
         return reverse("listing_detail_view", args=(self.object.id,))
 
 
-class ListingUpdateView(LoginRequiredMixin, UpdateView):
+class ListingUpdateView(LoginRequiredMixin, OwnershipRequired, UpdateView):
     model = Listing
+    bypasspermission = "cl_app.change_listing"
     fields = ['listing_city', 'title', 'price', 'description', 'photo']
-
     def get_success_url(self):
         return reverse("listing_detail_view", args=(self.object.id,))
 
 
-class ListingDeleteView(LoginRequiredMixin, DeleteView):
+class ListingDeleteView(LoginRequiredMixin, OwnershipRequired, DeleteView):
     model = Listing
     success_url = reverse_lazy('profile_view')
-
-    def get_object(self, queryset=None):
-        listing = super().get_object()
-        if not listing.user == self.request.user:
-            raise Http404
-        return listing
+    bypasspermission = "cl_app.delete_listing"
 
 
 class ListingTypeCreateView(CreateView):
