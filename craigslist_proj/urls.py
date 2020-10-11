@@ -33,7 +33,7 @@ urlpatterns = [
     url(r'^listingupdate/(?P<pk>\d+)$', ListingUpdateView.as_view(), name='listing_update_view'),
     url(r'^listingdelete/(?P<pk>\d+)$', ListingDeleteView.as_view(), name='listing_delete_view'),
     url(r'^listing/(?P<pk>\d+)/$', ListingDetailView.as_view(), name='listing_detail_view'),
-    url(r'^catergory/(?P<categorypk>\d+)/$', CategoryListView.as_view(), name='category_list_view'),
+    url(r'^category/(?P<categorypk>\d+)/$', CategoryListView.as_view(), name='category_list_view'),
     url(r'^city/(?P<city>\d+)/$', CityListView.as_view(), name='city_list_view'),
     url(r'^city/(?P<citypk>\d+)/(?P<categorypk>\d+)/$', CityCategoryListView.as_view(), name='city_category_list_view'),
     # Start API urls
